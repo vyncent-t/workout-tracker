@@ -5,7 +5,7 @@ const path = require("path")
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(
-    process.env.MONGODB_URI || 'mongodb://localhost/3000',
+    process.env.MONGODB_URI || 'mongodb://localhost/27017/workspacedb',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -37,14 +37,7 @@ app.get("/stats", (req, res) => {
 // api routess 
 app.get("/api/workouts", async (req, res) => {
     try {
-        const userData = await Workout.aggregate([
-            {
-                $addFields: {
-                    "totalDuration.totalDuration": {
-                        $sum: "$exercises.duration"
-                    }
-                }
-            }]);
+        const userData = await Workout.find({}).sort({ day: -1 });
 
         if (!userData.length) {
             res.status(404).json({
