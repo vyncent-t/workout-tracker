@@ -5,7 +5,7 @@ const path = require("path")
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(
-    process.env.MONGODB_URI || 'mongodb://localhost/27017/workspacedb',
+    process.env.MONGODB_URI || 'mongodb://localhost/workout',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -38,19 +38,18 @@ app.get("/stats", (req, res) => {
 app.get("/api/workouts", async (req, res) => {
     try {
         const userData = await Workout.find({}).sort({ day: -1 });
-
-        if (!userData.length) {
-            res.status(404).json({
-                message: "No Workouts found in the database"
-            });
-        } else {
-            res.status(200).json(userData);
-        }
+        // return new array of objects but with total duration
+        res.json(userData.map(workout => {
+            return {
+                ...workout.toObject(),
+                totalDuration: workout.exercises.reduce((total, exercise) => total + exercise.duration, 0)
+            }
+        }));
     } catch (err) {
-        res.status(500).json(err);
+        console.log(err)
+        res.status(500).json(err)
     }
-});
-
+})
 // create 
 app.post("/api/workouts", async (req, res) => {
     try {
@@ -82,7 +81,21 @@ app.put("/api/workouts/:id", async (req, res) => {
 
 // range
 
-// not sure yet need to finish later
+app.get("/api/workouts/range", async (req, res) => {
+
+    try {
+        const workouts = await Workout.find({}).sort({ day: -1 }).limit(7);
+        res.json(workouts.map(workout => {
+            return {
+                ...workout.toObject(),
+                totalDuration: workout.exercises.reduce((total, exercise) => total + exercise.duration, 0)
+            }
+        }));
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
