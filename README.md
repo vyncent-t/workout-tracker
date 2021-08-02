@@ -9,7 +9,7 @@ The details provided by the user relate to the number of reps completed in their
 Alternatively, the user is also able to log the or the number of distance for running exercises.
 The data is also kept within a weeks period, allows for the user to see a graphical representation of their fitness progress.
 
-This project explores the dynamic relation between the database and the user on the client in real time.
+This project explores the dynamic relation between the database and the user on the client in real time using MongoDB and Mongoose.
 
 LINK: https://workout-tracker-project-vyn.herokuapp.com/?id=61070c8c8c51df00157e4a9b
 
