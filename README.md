@@ -12,3 +12,5 @@ The data is also kept within a weeks period, allows for the user to see a graphi
 This project explores the dynamic relation between the database and the user on the client in real time.
 
 LINK: https://workout-tracker-project-vyn.herokuapp.com/?id=61070c8c8c51df00157e4a9b
+
+![image](https://user-images.githubusercontent.com/78232183/127933165-9681c9bf-d2b1-4127-be36-58bd8dc1a338.png)
